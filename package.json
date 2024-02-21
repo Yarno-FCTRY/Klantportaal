@@ -1,0 +1,28 @@
+{
+  "name": "klantenportaal-api-fctry",
+  "version": "1.0.0",
+  "description": "API voor het klanten portaal van fctry voor facturen door te sturen naar de front-end van moneybird",
+  "main": "/src/server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec ts-node src/server.ts",
+    "dev": "nodemon src/server.ts"
+  },
+  "author": "FCTRY B.V.",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.19",
+    "axios": "^1.6.7",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/multer": "^1.4.11"
+  }
+}
