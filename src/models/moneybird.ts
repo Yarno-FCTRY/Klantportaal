@@ -16,7 +16,7 @@ export async function getContactData(mem_id: string, company_name: string) {
     } else {
         identifier = company_name
     }
-    
+
     const response = await axios.get(
       `https://moneybird.com/api/v2/${app_id}/contacts.json?query=${
         identifier
@@ -49,75 +49,56 @@ export async function getInvoiceData(contact_id: string) {
   }
 }
 
-export async function updateContact(
-  moneybird_user_id: string,
-  company_name: string,
-  email: string,
-  first_name: string,
-  last_name: string,
-  address: string,
-  zip: string,
-  city: string,
-  country: string
-) {
-  try {
-    const response = await axios.patch(
-      `https://moneybird.com/api/v2/${app_id}/contacts/${moneybird_user_id}.json`,
-      {
-        contact: {
-          company_name: company_name,
-          send_invoices_to_email: email,
-          send_estimates_to_email: email,
-          firstname: first_name,
-          lastname: last_name,
-          address1: address,
-          zipcode: zip,
-          city: city,
-          county: country,
-        },
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${moneybird_api_token}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error("Error updating contact in Moneybird API");
-  }
+export async function updateContact(moneybird_user_id: string, company_name: string, email: string, first_name: string, last_name: string, address: string, zip: string, city: string, country: string) {
+    try {
+        const response = await axios.patch(
+            `https://moneybird.com/api/v2/${app_id}/contacts/${moneybird_user_id}.json`,
+            {
+                contact: {
+                    company_name: company_name,
+                    send_invoices_to_email: email,
+                    send_estimates_to_email: email,
+                    firstname: first_name,
+                    lastname: last_name,
+                    address1: address,
+                    zipcode: zip,
+                    city: city,
+                    county: country,
+                }
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${moneybird_api_token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        throw new Error("Error updating contact in Moneybird API");
+    }
 }
 
-export async function createContact(
-  mem_id: string,
-  first_name: string,
-  last_name: string,
-  company_name: string,
-  email: string
-) {
-  try {
-    const contactData = {
-      company_name: company_name,
-      firstname: first_name,
-      lastname: last_name,
-      customer_id: mem_id,
-      send_invoices_to_email: email,
-      send_estimates_to_email: email,
-    };
+export async function createContact(mem_id: string, first_name: string, last_name: string, company_name: string, email: string) {
+    try {
+        const contactData = {
+            company_name: company_name,
+            firstname: first_name,
+            lastname: last_name,
+            customer_id: mem_id,
+            send_invoices_to_email: email,
+            send_estimates_to_email: email
+        };
 
-    const response = await axios.post(
-      `https://moneybird.com/api/v2/${app_id}/contacts.json`,
-      { contact: contactData },
-      {
-        headers: {
-          Authorization: `Bearer ${moneybird_api_token}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error(
-      "Error posting contact data to Moneybird API or User already exists"
-    );
-  }
+        const response = await axios.post(
+            `https://moneybird.com/api/v2/${app_id}/contacts.json`, {contact: contactData},
+            {
+                headers: {
+                    Authorization: `Bearer ${moneybird_api_token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        throw new Error("Error posting contact data to Moneybird API or User already exists");
+    }
 }

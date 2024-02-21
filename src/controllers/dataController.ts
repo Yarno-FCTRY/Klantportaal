@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+import {Request, Response} from "express";
 import {
-  getContactData,
-  getInvoiceData,
-  createContact,
-  updateContact,
+    getContactData,
+    getInvoiceData,
+    createContact,
+    updateContact,
 } from "../models/moneybird";
 
 export async function processData(req: Request, res: Response) {
@@ -31,17 +31,17 @@ export async function processData(req: Request, res: Response) {
 }
 
 export async function updateMoneybirdContact(req: Request, res: Response) {
-  try {
-    const data = req.body;
-    const mem_id = data.memberstack_id;
-    const company_name = data.company;
-    const email = data.email;
-    const first_name = data.first_name;
-    const last_name = data.last_name;
-    const address = data.address;
-    const zip = data.zip;
-    const city = data.city;
-    const country = data.country;
+    try {
+        const data = req.body;
+        const mem_id = data.memberstack_id;
+        const company_name = data.company;
+        const email = data.email;
+        const first_name = data.first_name;
+        const last_name = data.last_name;
+        const address = data.address;
+        const zip = data.zip;
+        const city = data.city;
+        const country = data.country;
 
     if (data && mem_id) {
       //console.log("MEMBER ID:", mem_id);
@@ -70,30 +70,31 @@ export async function updateMoneybirdContact(req: Request, res: Response) {
 }
 
 export async function createMoneybirdContact(req: Request, res: Response) {
-  try {
-    const data = req.body;
+    try {
+        const data = req.body;
 
-    if (data) {
-      const mem_id = data.memberstack_id;
-      const first_name = data.first_name;
-      const last_name = data.last_name;
-      const company_name = data.company_name;
-      const email = data.email;
-      if (mem_id) {
-        const createContactRequest = await createContact(
-          mem_id,
-          first_name,
-          last_name,
-          company_name,
-          email
-        );
-        res.send(
-          "MONEYBIRD INVOICE DATA:" + JSON.stringify(createContactRequest)
-        );
-      }
+        if (data) {
+            const mem_id = data.memberstack_id;
+            const first_name = data.first_name;
+            const last_name = data.last_name;
+            const company_name = data.company_name;
+            const email = data.email;
+            if (mem_id) {
+                const createContactRequest = await createContact(
+                    mem_id,
+                    first_name,
+                    last_name,
+                    company_name,
+                    email
+                );
+                res.send(
+                    "MONEYBIRD INVOICE DATA:" + JSON.stringify(createContactRequest)
+                );
+            }
+        }
+    } catch (error) {
+        console.error("Error processing request:", error);
+        res.status(400).send("Error processing request");
     }
-  } catch (error) {
-    console.error("Error processing request:", error);
-    res.status(400).send("Error processing request");
-  }
 }
+
