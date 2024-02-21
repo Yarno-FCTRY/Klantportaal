@@ -4,9 +4,12 @@
   "description": "API voor het klanten portaal van fctry voor facturen door te sturen naar de front-end van moneybird",
   "main": "/src/server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --exec ts-node src/server.ts",
-    "dev": "nodemon src/server.ts"
+    "build": "rimraf dist && tsc",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
+    "dev": "nodemon src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "FCTRY B.V.",
   "license": "ISC",
@@ -19,6 +22,7 @@
     "express": "^4.18.2",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.3",
+    "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
