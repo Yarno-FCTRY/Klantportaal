@@ -10,13 +10,13 @@ import {
 export async function processData(req: Request, res: Response) {
   try {
     const data = req.body;
-    const mem_id = data.memberstack_id;
-    const company_name = data.company_name;
-    if (mem_id || company_name) {
-      const contactData = await getContactData(mem_id, company_name);
-      const moneybird_user_id = contactData[0].id;
-      if (moneybird_user_id) {
-        const invoiceData = await getInvoiceData(moneybird_user_id);
+    const memId = data.memberstack_id;
+    const companyName = data.company_name;
+    if (memId || companyName) {
+      const contactData = await getContactData(memId, companyName);
+      const moneybirdUserId = contactData[0].id;
+      if (moneybirdUserId) {
+        const invoiceData = await getInvoiceData(moneybirdUserId);
         res.send("MONEYBIRD INVOICE DATA:" + JSON.stringify(invoiceData));
       }
     } else {
@@ -32,32 +32,32 @@ export async function processData(req: Request, res: Response) {
 export async function updateMoneybirdContact(req: Request, res: Response) {
     try {
         const data = req.body;
-        const mem_id = data.memberstack_id;
-        const company_name = data.company;
+        const memId = data.memberstack_id;
+        const companyName = data.company;
         const email = data.email;
-        const first_name = data.first_name;
-        const last_name = data.last_name;
+        const firstName = data.first_name;
+        const lastName = data.last_name;
         const address = data.address;
         const zip = data.zip;
         const city = data.city;
         const country = data.country;
 
-    if (data && mem_id) {
-      const contactData = await getContactData(mem_id, company_name);
-      const moneybird_user_id = contactData[0].id;
-      if (moneybird_user_id) {
-        const updatecontactdata = await updateContact(
-          moneybird_user_id,
-          company_name,
+    if (data && memId) {
+      const contactData = await getContactData(memId, companyName);
+      const moneybirdUserId = contactData[0].id;
+      if (moneybirdUserId) {
+        const updateContactData = await updateContact(
+          moneybirdUserId,
+          companyName,
           email,
-          first_name,
-          last_name,
+          firstName,
+          lastName,
           address,
           zip,
           city,
           country
         );
-        res.send("MONEYBIRD INVOICE DATA:" + JSON.stringify(updatecontactdata));
+        res.send("MONEYBIRD INVOICE DATA:" + JSON.stringify(updateContactData));
       }
     }
   } catch (error) {
@@ -72,18 +72,18 @@ export async function createMoneybirdContact(req: Request, res: Response) {
         const data = req.body;
 
         if (data) {
-            const mem_id = data.memberstack_id;
-            const first_name = data.first_name;
-            const last_name = data.last_name;
-            const company_name = data.company_name;
+            const memId = data.memberstack_id;
+            const firstName = data.first_name;
+            const lastName = data.last_name;
+            const companyName = data.company_name;
             const email = data.email;
-            if (mem_id) {
+            if (memId) {
                 const createContactRequest = await createContact(
-                    mem_id,
-                    first_name,
-                    last_name,
-                    company_name,
-                    email
+                  memId,
+                  firstName,
+                  lastName,
+                  companyName,
+                  email
                 );
                 res.send(
                     "MONEYBIRD INVOICE DATA:" + JSON.stringify(createContactRequest)
