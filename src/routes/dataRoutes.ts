@@ -1,6 +1,10 @@
-import express from 'express';
-import {processData, updateMoneybirdContact, createMoneybirdContact} from "../controllers/dataController";
-import multer from 'multer';
+import express from "express";
+import {
+  processData,
+  updateMoneybirdContact,
+  createMoneybirdContact,
+} from "../controllers/dataController";
+import multer from "multer";
 
 // Set up multer for handling form-data
 const upload = multer();
