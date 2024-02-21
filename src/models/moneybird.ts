@@ -3,9 +3,12 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const moneybird_api_token = process.env.moneybird_api_token;
-const app_id = process.env.app_id;
+/** Bearer token for moneybird */
+const moneybird_api_token = process.env.MONEYBIRD_API_TOKEN;
+/** app id of Moneybird (found in url moneybird.com/{APP-ID}/) */
+const app_id = process.env.APP_ID;
 
+/** gets the contact data of said user via either Memberstack id or company name */
 export async function getContactData(mem_id: string, company_name: string) {
   try {
 
@@ -33,6 +36,7 @@ export async function getContactData(mem_id: string, company_name: string) {
   }
 }
 
+/** Gets the invoices from said user */
 export async function getInvoiceData(contact_id: string) {
   try {
     const response = await axios.get(
@@ -49,6 +53,7 @@ export async function getInvoiceData(contact_id: string) {
   }
 }
 
+/** Updates the contact data of said user */
 export async function updateContact(moneybird_user_id: string, company_name: string, email: string, first_name: string, last_name: string, address: string, zip: string, city: string, country: string) {
     try {
         const response = await axios.patch(
@@ -78,6 +83,7 @@ export async function updateContact(moneybird_user_id: string, company_name: str
     }
 }
 
+/** created a new contact for in Moneybird */
 export async function createContact(mem_id: string, first_name: string, last_name: string, company_name: string, email: string) {
     try {
         const contactData = {

@@ -6,18 +6,16 @@ import {
     updateContact,
 } from "../models/moneybird";
 
+/** Get invoices from said user. */
 export async function processData(req: Request, res: Response) {
   try {
-    //console.log("Received raw JSON data:", req.body);
     const data = req.body;
     const mem_id = data.memberstack_id;
     const company_name = data.company_name;
     if (mem_id || company_name) {
-      //console.log("MEMBER ID:", mem_id);
       const contactData = await getContactData(mem_id, company_name);
       const moneybird_user_id = contactData[0].id;
       if (moneybird_user_id) {
-        //console.log("MONEYBIRD ID: ", moneybird_user_id);
         const invoiceData = await getInvoiceData(moneybird_user_id);
         res.send("MONEYBIRD INVOICE DATA:" + JSON.stringify(invoiceData));
       }
@@ -30,6 +28,7 @@ export async function processData(req: Request, res: Response) {
   }
 }
 
+/** Update Moneybird Contact from said user. */
 export async function updateMoneybirdContact(req: Request, res: Response) {
     try {
         const data = req.body;
@@ -44,11 +43,9 @@ export async function updateMoneybirdContact(req: Request, res: Response) {
         const country = data.country;
 
     if (data && mem_id) {
-      //console.log("MEMBER ID:", mem_id);
       const contactData = await getContactData(mem_id, company_name);
       const moneybird_user_id = contactData[0].id;
       if (moneybird_user_id) {
-        //console.log("MONEYBIRD ID: ", moneybird_user_id);
         const updatecontactdata = await updateContact(
           moneybird_user_id,
           company_name,
@@ -69,6 +66,7 @@ export async function updateMoneybirdContact(req: Request, res: Response) {
   }
 }
 
+/** Creates a Moneybird contact */
 export async function createMoneybirdContact(req: Request, res: Response) {
     try {
         const data = req.body;

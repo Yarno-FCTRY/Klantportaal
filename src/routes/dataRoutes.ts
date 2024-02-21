@@ -11,7 +11,7 @@ const upload = multer();
 
 const router = express.Router();
 
-router.post("/data", upload.none(), processData);
+router.post("/v1/data", upload.none(), processData);
 router.post("/update-contact", upload.none(), updateMoneybirdContact);
 router.post("/create-contact", upload.none(), createMoneybirdContact);
 
