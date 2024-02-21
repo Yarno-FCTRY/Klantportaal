@@ -5,10 +5,10 @@ dotenv.config();
 const moneybird_api_token = process.env.moneybird_api_token;
 const app_id = process.env.app_id;
 
-export async function getContactData(mem_id: string) {
+export async function getContactData(mem_id: string, company_name: string) {
     try {
         const response = await axios.get(
-            `https://moneybird.com/api/v2/${app_id}/contacts.json?query=${mem_id}`,
+            `https://moneybird.com/api/v2/${app_id}/contacts.json?query=${mem_id || company_name}`,
             {
                 headers: {
                     Authorization: `Bearer ${moneybird_api_token}`,
@@ -34,5 +34,30 @@ export async function getInvoiceData(contact_id: string) {
         return response.data;
     } catch (error) {
         throw new Error("Error fetching invoice data from Moneybird API");
+    }
+}
+
+export async function createContact(mem_id:string, first_name:string, last_name:string, company_name:string, email:string) {
+    try {
+        const contactData = {
+            company_name: company_name,
+            firstname: first_name,
+            lastname: last_name,
+            customer_id: mem_id,
+            send_invoices_to_email: email,
+            send_estimates_to_email: email
+          };
+
+        const response = await axios.post(
+            `https://moneybird.com/api/v2/${app_id}/contacts.json`, { contact: contactData },
+            {
+                headers: {
+                    Authorization: `Bearer ${moneybird_api_token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch(error) {
+        throw new Error("Error posting contact data to Moneybird API or User already exists");
     }
 }
